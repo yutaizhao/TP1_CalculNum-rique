@@ -4,13 +4,29 @@
 /* Poisson problem (Heat equation)            */
 /**********************************************/
 #include "lib_poisson1D.h"
-
+/*
+ le stockage GB en priorit ́e colonne pour la matrice de Poisson 1D
+ lab : row, la : column, AB : matrice Poisson 1D, kv : num of sup/low diag
+ */
 void set_GB_operator_colMajor_poisson1D(double* AB, int *lab, int *la, int *kv){
+    AB[0] = 0;
+    AB[ ((*la)* (2*(*kv)+1)) -1 ] =0;
+    for(int j = 0; j < (*la) ; ++j){
+        for(int i = 0; i < 2*(*kv)+1 ; ++i){
+            if(i == 2*(*kv)-1){
+                AB[i+j] == -2;
+            }else{
+                AB[i+j] == 1;
+            }
+            
+        }
+    }
 }
 
 void set_GB_operator_colMajor_poisson1D_Id(double* AB, int *lab, int *la, int *kv){
 }
 
+//vectur initial b
 void set_dense_RHS_DBC_1D(double* RHS, int* la, double* BC0, double* BC1){
 }  
 
