@@ -8,35 +8,49 @@
  le stockage GB en priorit ́e colonne pour la matrice de Poisson 1D
  lab : row, la : column, AB : matrice Poisson 1D, kv : num of sup/low diag
  */
-void set_GB_operator_colMajor_poisson1D(double* AB, int *lab, int *la, int *kv){
-    AB[0] = 0;
-    AB[ ((*la)* (2*(*kv)+1)) -1 ] =0;
-    for(int j = 0; j < (*la) ; ++j){
-        for(int i = 0; i < 2*(*kv)+1 ; ++i){
-            if(i == 2*(*kv)-1){
-                AB[i+j] == -2;
-            }else{
-                AB[i+j] == 1;
+void set_GB_operator_colMajor_poisson1D(double* AB, int *lab, int *la, int *kv) {
+    for (int j = 0; j < (*la); ++j) {
+        for (int i = 0; i < 2 * (*kv) + 1; ++i) {
+            if (i == 2 * (*kv) - 1) {
+                AB[i + j * (2 * (*kv) + 1)] = -2;
+            } else {
+                AB[i + j * (2 * (*kv) + 1)] = 1;
             }
-            
         }
     }
+    AB[0] = 0;
+    AB[((*la) * (2 * (*kv) + 1)) - 1] = 0;
 }
 
+
 void set_GB_operator_colMajor_poisson1D_Id(double* AB, int *lab, int *la, int *kv){
+    
 }
 
 //vectur initial b
 void set_dense_RHS_DBC_1D(double* RHS, int* la, double* BC0, double* BC1){
-}  
+    int g  = 0 ;
+    
+    for (int i = 1; i < (*la)-1 ; ++i){
+        RHS[i] = g;
+    }
+    RHS[0] = *BC0;
+    RHS[*la-1] = *BC1;
+    
+}
 
 void set_analytical_solution_DBC_1D(double* EX_SOL, double* X, int* la, double* BC0, double* BC1){
-}  
+    
+    for (int i = 0; i < (*la) ; ++i){
+        EX_SOL[i] = *BC0 + X[i]*(*BC1 - *BC0);
+    }
+    
+}
 
 void set_grid_points_1D(double* x, int* la){
 }
 
-void write_GB_operator_rowMajor_poisson1D(double* AB, int* lab, int* la, char* filename){
+void write_GB_operator_rawMajor_poisson1D(double* AB, int* lab, int* la, char* filename){
   FILE * file;
   int ii,jj;
   file = fopen(filename, "w");
