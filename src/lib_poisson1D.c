@@ -24,7 +24,15 @@ void set_GB_operator_colMajor_poisson1D(double* AB, int *lab, int *la, int *kv) 
 
 
 void set_GB_operator_colMajor_poisson1D_Id(double* AB, int *lab, int *la, int *kv){
-    
+    for (int j = 0; j < (*la); ++j) {
+        for (int i = 0; i < 2 * (*kv) + 1; ++i) {
+            if (i == 2 * (*kv) - 1) {
+                AB[i + j * (2 * (*kv) + 1)] = 1;
+            } else {
+                AB[i + j * (2 * (*kv) + 1)] = 0;
+            }
+        }
+    }
 }
 
 //vectur initial b
