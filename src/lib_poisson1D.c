@@ -16,7 +16,9 @@ void set_GB_operator_colMajor_poisson1D(double* AB, int *lab, int *la, int *kv) 
             } else {
                 AB[i + j * (2 * (*kv) + 1)] = 1;
             }
+            printf("%f ", AB[i + j * (2 * (*kv) + 1)] );
         }
+        printf("\n");
     }
     AB[0] = 0;
     AB[((*la) * (2 * (*kv) + 1)) - 1] = 0;
